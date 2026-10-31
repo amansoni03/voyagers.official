@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-navy-dark: #040D1A;
+    --color-navy-royal: #07182F;
+    --color-navy-deep: #0A1E3B;
+    --color-gold-antique: #C5A052;
+    --color-gold-champagne: #E6C77A;
+    --color-gold-light: #F7E7B4;
+    --color-ivory: #F8F3E8;
+    --color-ivory-warm: #FFFDF7;
+  }
+
+  html, body {
+    background-color: #040D1A;
+    color: #F8F3E8;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    cursor: url('/voyagers-cursor.png') 16 16, auto;
+  }
+
+  a, button, [role="button"], input, select, textarea {
+    cursor: url('/voyagers-cursor.png') 16 16, pointer;
+  }
+
+  h1, h2, h3, h4, .font-serif-royal {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  .font-cinzel {
+    font-family: 'Cinzel', serif;
+  }
+}
+
+/* Custom Gold Shimmer and Borders */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #F7E7B4 0%, #C5A052 50%, #E6C77A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #C5A052 0%, #E6C77A 50%, #B8903F 100%);
+}
+
+.gold-gradient-border {
+  border-image: linear-gradient(135deg, #C5A052, #E6C77A, #8F6F2C) 1;
+}
+
+.gold-glow {
+  box-shadow: 0 0 25px rgba(197, 160, 82, 0.22);
+}
+
+.gold-glow-hover:hover {
+  box-shadow: 0 0 35px rgba(230, 199, 122, 0.35);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #040D1A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0A1E3B;
+  border: 1px solid rgba(197, 160, 82, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C5A052;
+}
+
+/* Certificate frame styling */
+.ornate-corner-tl {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 24px;
+  height: 24px;
+  border-top: 2px solid #C5A052;
+  border-left: 2px solid #C5A052;
+  pointer-events: none;
+}
+
+.ornate-corner-tr {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-top: 2px solid #C5A052;
+  border-right: 2px solid #C5A052;
+  pointer-events: none;
+}
+
+.ornate-corner-bl {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  width: 24px;
+  height: 24px;
+  border-bottom: 2px solid #C5A052;
+  border-left: 2px solid #C5A052;
+  pointer-events: none;
+}
+
+.ornate-corner-br {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-bottom: 2px solid #C5A052;
+  border-right: 2px solid #C5A052;
+  pointer-events: none;
+}
+
+/* 3D Perspective & Hardware-accelerated Transitions */
+.perspective-1200 {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}

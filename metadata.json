@@ -1,0 +1,6 @@
+{
+  "name": "VOYAGERS — SMS Lucknow",
+  "description": "Official 3D web experience of VOYAGERS Student Club at School of Management Sciences (SMS), Lucknow. Explore. Create. Achieve.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
