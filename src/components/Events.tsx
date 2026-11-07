@@ -104,6 +104,9 @@ export const Events: React.FC = () => {
                     alt={evt.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.src = '/sms-lucknow-campus.jpg';
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0A1E3B] via-transparent to-transparent" />
 

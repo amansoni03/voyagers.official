@@ -83,6 +83,9 @@ export const Gallery: React.FC = () => {
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.src = '/sms-lucknow-campus.jpg';
+                    }}
                   />
 
                   {/* Scrim Overlay */}
@@ -156,6 +159,9 @@ export const Gallery: React.FC = () => {
                 alt={filteredItems[lightboxIndex].title}
                 className="max-h-[70vh] w-auto object-contain"
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  e.currentTarget.src = '/sms-lucknow-campus.jpg';
+                }}
               />
             </div>
 

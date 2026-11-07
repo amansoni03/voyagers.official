@@ -45,7 +45,7 @@ export const Timeline: React.FC = () => {
         'Featured 24-hour non-stop algorithmic marathon',
         'Recognized as SMS Lucknow’s fastest-growing student body',
       ],
-      image: '/src/assets/images/voyagers_hackathon_summit_1793430500132.jpg',
+      image: '/images/voyagers_hackathon_summit.jpg',
     },
     {
       year: '2023',
@@ -58,7 +58,7 @@ export const Timeline: React.FC = () => {
         'Secured 1st Runner Up in North India Robocon challenge',
         'Student prototype patented for municipal smart metering',
       ],
-      image: '/src/assets/images/voyagers_robotics_workshop_1793430500043.jpg',
+      image: '/images/voyagers_robotics_workshop.jpg',
     },
     {
       year: '2024',
@@ -71,7 +71,7 @@ export const Timeline: React.FC = () => {
         '15+ trophies secured across tech and management domains',
         'Active club student membership crossed 400 individuals',
       ],
-      image: '/src/assets/images/voyagers_annual_gala_1793430497265.jpg',
+      image: '/images/voyagers_annual_gala.jpg',
     },
     {
       year: '2025',
@@ -84,7 +84,7 @@ export const Timeline: React.FC = () => {
         'Held inaugural 3D Creative Web & AI Jam with 80+ builders',
         'Active membership expanded to 500+ across all college streams',
       ],
-      image: '/src/assets/images/voyagers_hackathon_summit_1793430500132.jpg',
+      image: '/images/voyagers_hackathon_summit.jpg',
     },
     {
       year: '2026',
@@ -97,7 +97,7 @@ export const Timeline: React.FC = () => {
         'Official digital platform launch with 3D web experience',
         'Global industry mentorship and placement fast-tracks',
       ],
-      image: '/src/assets/images/voyagers_annual_gala_1793430497265.jpg',
+      image: '/images/voyagers_annual_gala.jpg',
     },
   ];
 
@@ -185,6 +185,9 @@ export const Timeline: React.FC = () => {
                     alt={m.title}
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.src = '/sms-lucknow-campus.jpg';
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#040D1A]/80 via-transparent to-transparent" />
                   <div className="absolute bottom-3 left-4 right-4">

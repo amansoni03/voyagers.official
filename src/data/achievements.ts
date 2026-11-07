@@ -25,7 +25,7 @@ export const ACHIEVEMENTS: Achievement[] = [
       'Engineered an edge-AI IoT sensor network for municipal power grid optimization and automated fault detection, recognized for industrial viability.',
     team: ['Aman Soni', 'Rohan Sharma', 'Priya Verma', 'Devendra Singh'],
     certificateNumber: 'VOY-SIH-2025-01',
-    image: '/src/assets/images/voyagers_hackathon_summit_1793430500132.jpg',
+    image: '/images/voyagers_hackathon_summit.jpg',
   },
   {
     id: 'ach-2',
@@ -39,7 +39,7 @@ export const ACHIEVEMENTS: Achievement[] = [
       'Designed and programmed a LiDAR-guided omnidirectional rover capable of navigating obstacle-dense subterranean terrains with sub-centimeter accuracy.',
     team: ['Voyagers Robotics Core', 'Lead: Ayush Mehrotra', 'Hardware: Simran Kaur'],
     certificateNumber: 'VOY-ROBO-2025-09',
-    image: '/src/assets/images/voyagers_robotics_workshop_1793430500043.jpg',
+    image: '/images/voyagers_robotics_workshop.jpg',
   },
   {
     id: 'ach-3',
@@ -53,7 +53,7 @@ export const ACHIEVEMENTS: Achievement[] = [
       'Awarded the prestigious Director’s Rolling Trophy for exemplary student engagement, hosting 8 state-level symposiums, and raising academic standing.',
     team: ['Voyagers Executive Council', 'Faculty Mentors'],
     certificateNumber: 'SMS-HONOR-2024-C03',
-    image: '/src/assets/images/voyagers_annual_gala_1793430497265.jpg',
+    image: '/images/voyagers_annual_gala.jpg',
   },
   {
     id: 'ach-4',
@@ -67,7 +67,7 @@ export const ACHIEVEMENTS: Achievement[] = [
       'Developed a zero-knowledge proof authentication framework for micro-lending portals with real-time fraud telemetry and sub-second latency.',
     team: ['Shubham Pandey', 'Ananya Gupta', 'Vikas Maurya'],
     certificateNumber: 'VOY-CYBER-2024-22',
-    image: '/src/assets/images/voyagers_hackathon_summit_1793430500132.jpg',
+    image: '/images/voyagers_hackathon_summit.jpg',
   },
   {
     id: 'ach-5',
@@ -95,6 +95,6 @@ export const ACHIEVEMENTS: Achievement[] = [
       'Field-tested multispectral crop-health analysis payload on low-cost drone airframes, delivering actionable fertilizer recommendations to local farmers.',
     team: ['Arjun Rastogi', 'Mohit Yadav', 'Neha Mishra'],
     certificateNumber: 'VOY-AGRI-2023-04',
-    image: '/src/assets/images/voyagers_robotics_workshop_1793430500043.jpg',
+    image: '/images/voyagers_robotics_workshop.jpg',
   },
 ];
