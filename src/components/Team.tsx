@@ -31,6 +31,7 @@ export const Team: React.FC = () => {
   const facultyCount = useMemo(() => TEAM_MEMBERS.filter((m) => m.tier === 'faculty').length, []);
   const coreCount = useMemo(() => TEAM_MEMBERS.filter((m) => m.tier === 'core').length, []);
   const coordCount = useMemo(() => TEAM_MEMBERS.filter((m) => m.tier === 'coordinator').length, []);
+  const memberCount = useMemo(() => TEAM_MEMBERS.filter((m) => m.tier === 'member').length, []);
 
   // Filtered members list
   const filteredMembers = useMemo(() => {
@@ -68,7 +69,7 @@ export const Team: React.FC = () => {
 
           <p className="text-slate-300 text-sm sm:text-base font-light leading-relaxed">
             Department of Computer Science Engineering and Allied Branches | School of Management Sciences, Lucknow.
-            Distinguished faculty coordinators, core office bearers, and student coordinators leading Voyagers.
+            Distinguished faculty coordinators, core council bearers, student coordinators, and student members leading across Technical, Cultural, Editorial, R&D, Sports, and Advisory wings.
           </p>
 
           <GoldDivider />
@@ -76,10 +77,11 @@ export const Team: React.FC = () => {
           {/* Primary Tier Filter Tabs */}
           <div className="flex flex-wrap items-center justify-center gap-2.5 mt-8">
             {[
-              { id: 'all', label: `All Leadership (${TEAM_MEMBERS.length})` },
+              { id: 'all', label: `All Committee (${TEAM_MEMBERS.length})` },
               { id: 'faculty', label: `Faculty Coordinators (${facultyCount})` },
-              { id: 'core', label: `Core Council / Office Bearers (${coreCount})` },
+              { id: 'core', label: `Core Council (${coreCount})` },
               { id: 'coordinator', label: `Student Coordinators (${coordCount})` },
+              { id: 'member', label: `Student Members (${memberCount})` },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -221,6 +223,14 @@ export const Team: React.FC = () => {
                         title="Student Coordinator"
                       >
                         <Sparkles size={14} />
+                      </div>
+                    )}
+                    {member.tier === 'member' && (
+                      <div
+                        className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-[#07182F] border border-[#C5A052] text-[#E6C77A] shadow-md"
+                        title="Student Member"
+                      >
+                        <Award size={14} />
                       </div>
                     )}
                   </div>

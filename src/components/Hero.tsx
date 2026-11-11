@@ -42,32 +42,38 @@ export const Hero: React.FC<HeroProps> = ({ scrollY = 0 }) => {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-[#C5A052]/15 blur-3xl pointer-events-none -z-10" />
       <div className="absolute bottom-1/3 right-1/4 w-[32rem] h-[32rem] rounded-full bg-[#0A1E3B]/50 blur-3xl pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
+      {/* Full-Page 3D Celestial Globe (Spans the entire hero section, smoothly gliding under the typography) */}
+      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-auto">
+        <Globe3D scrollY={scrollY} className="w-full h-full" />
+      </div>
+
+      {/* Hero Foreground Content Layer */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 relative pointer-events-none">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[calc(100vh-140px)]">
-          {/* Left Column: Typography & CTAs */}
-          <div className="lg:col-span-6 flex flex-col justify-center text-left pt-6 lg:pt-0">
+          {/* Left Column: Typography & CTAs floating gracefully in front of the 3D globe */}
+          <div className="lg:col-span-7 flex flex-col justify-center text-left pt-6 lg:pt-0">
             {/* Main Grand Display Heading */}
-            <h1 className="font-cinzel text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-[0.06em] text-[#FFFDF7] leading-none mb-3">
-              <span className="gold-gradient-text drop-shadow-[0_4px_16px_rgba(197,160,82,0.35)]">
+            <h1 className="font-cinzel text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-[0.06em] text-[#FFFDF7] leading-none mb-3 drop-shadow-[0_4px_24px_rgba(4,13,26,0.95)]">
+              <span className="gold-gradient-text drop-shadow-[0_4px_16px_rgba(197,160,82,0.45)]">
                 {CLUB_CONFIG.name}
               </span>
             </h1>
 
             {/* Tagline */}
-            <h2 className="font-serif-royal italic text-2xl sm:text-3xl lg:text-4xl text-[#E6C77A] font-normal tracking-wide mb-6">
+            <h2 className="font-serif-royal italic text-2xl sm:text-3xl lg:text-4xl text-[#E6C77A] font-normal tracking-wide mb-6 drop-shadow-[0_2px_14px_rgba(4,13,26,0.85)]">
               {CLUB_CONFIG.tagline}
             </h2>
 
             {/* Narrative Description */}
-            <p className="text-slate-300 text-sm sm:text-base lg:text-lg font-light leading-relaxed max-w-xl mb-10 text-pretty">
+            <p className="text-slate-200 text-sm sm:text-base lg:text-lg font-light leading-relaxed max-w-xl mb-10 text-pretty drop-shadow-[0_2px_10px_rgba(4,13,26,0.95)] bg-[#040D1A]/40 backdrop-blur-[2px] p-3 -ml-3 rounded-2xl border border-[#C5A052]/10">
               &ldquo;A community of dreamers, innovators and achievers, uniting talent to explore new horizons.&rdquo;
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-4 sm:gap-5">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-5 pointer-events-auto">
               <button
                 onClick={() => handleScrollTo('journey')}
-                className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full gold-gradient-bg text-[#07182F] font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-[0_4px_20px_rgba(197,160,82,0.4)] hover:shadow-[0_4px_28px_rgba(230,199,122,0.6)] hover:scale-105 active:scale-95"
+                className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full gold-gradient-bg text-[#07182F] font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-[0_4px_20px_rgba(197,160,82,0.4)] hover:shadow-[0_4px_28px_rgba(230,199,122,0.6)] hover:scale-105 active:scale-95 cursor-pointer"
               >
                 <span>Explore Our Journey</span>
                 <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
@@ -75,7 +81,7 @@ export const Hero: React.FC<HeroProps> = ({ scrollY = 0 }) => {
 
               <button
                 onClick={() => handleScrollTo('events')}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-[#C5A052]/60 hover:border-[#E6C77A] bg-[#0A1E3B]/60 hover:bg-[#0A1E3B] text-[#F8F3E8] hover:text-[#FFFDF7] text-xs font-semibold uppercase tracking-wider transition-all duration-300 backdrop-blur-sm active:scale-95"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-[#C5A052]/60 hover:border-[#E6C77A] bg-[#0A1E3B]/80 hover:bg-[#0A1E3B] text-[#F8F3E8] hover:text-[#FFFDF7] text-xs font-semibold uppercase tracking-wider transition-all duration-300 backdrop-blur-md active:scale-95 cursor-pointer shadow-lg"
               >
                 <Calendar size={15} className="text-[#C5A052]" />
                 <span>Discover Events</span>
@@ -83,9 +89,12 @@ export const Hero: React.FC<HeroProps> = ({ scrollY = 0 }) => {
             </div>
           </div>
 
-          {/* Right Column: 3D Armillary Celestial Sphere */}
-          <div className="lg:col-span-6 flex items-center justify-center relative w-full h-[460px] sm:h-[540px] lg:h-[640px]">
-            <Globe3D scrollY={scrollY} className="w-full h-full" />
+          {/* Right Column: Open spatial expanse so the 3D globe shines through without any bounding box */}
+          <div className="lg:col-span-5 hidden lg:flex flex-col items-end justify-center pointer-events-none">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#07182F]/75 border border-[#C5A052]/40 text-[#E6C77A] text-xs font-medium tracking-wider backdrop-blur-md shadow-xl pointer-events-auto hover:border-[#E6C77A] transition-colors">
+              <span className="w-2 h-2 rounded-full bg-[#C5A052] animate-pulse" />
+              <span>360° Celestial Sphere</span>
+            </div>
           </div>
         </div>
       </div>

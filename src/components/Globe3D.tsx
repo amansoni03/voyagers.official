@@ -711,49 +711,73 @@ export const Globe3D: React.FC<Globe3DProps> = ({ className = '', scrollY = 0 })
     let previousPointerX = 0;
     let previousPointerY = 0;
 
-    const handlePointerMove = (e: MouseEvent) => {
+    const handlePointerDown = (e: MouseEvent | TouchEvent) => {
+      isDragging = true;
+      setIsInteracting(true);
+      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+      previousPointerX = clientX;
+      previousPointerY = clientY;
+    };
+
+    const handlePointerMove = (e: MouseEvent | TouchEvent) => {
+      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+
       const rect = container.getBoundingClientRect();
-      const normX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      const normY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+      const normX = ((clientX - rect.left) / Math.max(rect.width, 1)) * 2 - 1;
+      const normY = -(((clientY - rect.top) / Math.max(rect.height, 1)) * 2 - 1);
 
       if (isDragging) {
-        const deltaX = e.clientX - previousPointerX;
-        const deltaY = e.clientY - previousPointerY;
-        targetRotY += deltaX * 0.009;
-        targetRotX += deltaY * 0.009;
-        previousPointerX = e.clientX;
-        previousPointerY = e.clientY;
+        const deltaX = clientX - previousPointerX;
+        const deltaY = clientY - previousPointerY;
+        targetRotY += deltaX * 0.007;
+        targetRotX += deltaY * 0.007;
+        previousPointerX = clientX;
+        previousPointerY = clientY;
       } else {
-        mouseX = normX * 0.4;
-        mouseY = normY * 0.28;
+        mouseX = normX * 0.35;
+        mouseY = normY * 0.22;
       }
     };
 
-    const handleMouseDown = (e: MouseEvent) => {
-      isDragging = true;
-      setIsInteracting(true);
-      previousPointerX = e.clientX;
-      previousPointerY = e.clientY;
-    };
-
-    const handleMouseUp = () => {
+    const handlePointerUp = () => {
       isDragging = false;
       setIsInteracting(false);
     };
 
     window.addEventListener('mousemove', handlePointerMove);
-    container.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
+    container.addEventListener('mousedown', handlePointerDown);
+    window.addEventListener('mouseup', handlePointerUp);
 
-    const handleResize = () => {
+    container.addEventListener('touchstart', handlePointerDown, { passive: true });
+    window.addEventListener('touchmove', handlePointerMove, { passive: true });
+    window.addEventListener('touchend', handlePointerUp);
+
+    const updateLayout = () => {
       if (!container) return;
-      const w = container.clientWidth;
-      const h = container.clientHeight;
+      const w = container.clientWidth || window.innerWidth;
+      const h = container.clientHeight || window.innerHeight;
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+
+      // Position & scale masterGroup so that the 3D celestial sphere spans wide across the screen,
+      // gliding seamlessly under the hero text and emerging into the open right space without being boxed.
+      if (w >= 1024) {
+        const targetX = w > 1440 ? 1.25 : 0.95;
+        masterGroup.position.set(targetX, 0, 0);
+        masterGroup.scale.setScalar(w > 1440 ? 1.15 : 1.05);
+      } else if (w >= 768) {
+        masterGroup.position.set(0.15, -0.15, 0);
+        masterGroup.scale.setScalar(0.92);
+      } else {
+        masterGroup.position.set(0, -0.28, 0);
+        masterGroup.scale.setScalar(0.8);
+      }
     };
-    window.addEventListener('resize', handleResize);
+    updateLayout();
+    window.addEventListener('resize', updateLayout);
 
     // Passive scroll listener (0 React re-renders)
     const handlePassiveScroll = () => {
@@ -835,9 +859,12 @@ export const Globe3D: React.FC<Globe3DProps> = ({ className = '', scrollY = 0 })
       visibilityObserver.disconnect();
       window.removeEventListener('scroll', handlePassiveScroll);
       window.removeEventListener('mousemove', handlePointerMove);
-      container.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('resize', handleResize);
+      container.removeEventListener('mousedown', handlePointerDown);
+      window.removeEventListener('mouseup', handlePointerUp);
+      container.removeEventListener('touchstart', handlePointerDown);
+      window.removeEventListener('touchmove', handlePointerMove);
+      window.removeEventListener('touchend', handlePointerUp);
+      window.removeEventListener('resize', updateLayout);
 
       renderer.dispose();
       globeTexture.dispose();
@@ -867,24 +894,25 @@ export const Globe3D: React.FC<Globe3DProps> = ({ className = '', scrollY = 0 })
   }
 
   return (
-    <div className={`relative flex items-center justify-center select-none ${className}`}>
+    <div className={`relative w-full h-full select-none ${className}`}>
       {/* 3D Canvas Container */}
       <div
         ref={mountRef}
-        className={`w-full h-full min-h-[480px] lg:min-h-[580px] cursor-grab active:cursor-grabbing transition-transform duration-300 ${
-          isInteracting ? 'scale-[1.02]' : ''
+        className={`w-full h-full cursor-grab active:cursor-grabbing transition-transform duration-300 ${
+          isInteracting ? 'scale-[1.01]' : ''
         }`}
-        title="Click & Drag to rotate the Celestial Armillary Sphere"
+        title="Click & Drag anywhere to rotate the Celestial Armillary Sphere"
       />
 
-      {/* Subtle Atmospheric Backdrop Glow */}
+      {/* Subtle Atmospheric Depth Glow */}
       <div className="absolute inset-0 pointer-events-none -z-10 flex items-center justify-center">
-        <div className="w-[380px] h-[380px] md:w-[500px] md:h-[500px] rounded-full bg-radial from-[#C5A052]/15 via-[#0A1E3B]/25 to-transparent blur-3xl" />
+        <div className="w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full bg-radial from-[#C5A052]/10 via-[#0A1E3B]/20 to-transparent blur-3xl" />
       </div>
 
-      {/* Interactive Micro-Cue */}
-      <div className="absolute bottom-2 right-4 md:right-8 pointer-events-none text-[11px] tracking-wider uppercase text-[#C5A052]/70 font-medium bg-[#07182F]/70 px-2.5 py-1 rounded-md border border-[#C5A052]/30 backdrop-blur-sm">
-        ✦ Drag to rotate sphere
+      {/* Interactive Drag Hint */}
+      <div className="absolute bottom-4 right-4 md:right-8 pointer-events-none text-[11px] tracking-wider uppercase text-[#C5A052]/80 font-medium bg-[#07182F]/75 px-3 py-1.5 rounded-full border border-[#C5A052]/30 backdrop-blur-md shadow-lg hidden sm:flex items-center gap-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#E6C77A] animate-ping" />
+        <span>Drag to rotate 3D sphere</span>
       </div>
     </div>
   );
