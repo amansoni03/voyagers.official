@@ -13,7 +13,15 @@ export const Gallery: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const categories = ['All', 'Hackathons', 'Workshops', 'Celebrations', 'Campus'];
+  const categories = [
+    'All',
+    'Badge Ceremony',
+    'ABHYAS Series',
+    'INGENUITY Fest',
+    'Conclaves & Visits',
+    'Celebrations',
+    'Campus',
+  ];
 
   const filteredItems =
     selectedCategory === 'All'

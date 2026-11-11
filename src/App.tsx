@@ -8,7 +8,6 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Statistics } from './components/Statistics';
 import { About } from './components/About';
-import { Achievements } from './components/Achievements';
 import { Events } from './components/Events';
 import { Gallery } from './components/Gallery';
 import { Timeline } from './components/Timeline';
@@ -46,26 +45,23 @@ export default function App() {
         {/* SECTION 4: About Voyagers */}
         <About />
 
-        {/* SECTION 5: Achievements */}
-        <Achievements />
-
-        {/* SECTION 6: Events */}
+        {/* SECTION 5: Events */}
         <Events />
 
-        {/* SECTION 7: Event Gallery */}
+        {/* SECTION 6: Event Gallery */}
         <Gallery />
 
-        {/* SECTION 8: Our Journey */}
+        {/* SECTION 7: Our Journey */}
         <Timeline />
 
-        {/* SECTION 9: Our Team */}
+        {/* SECTION 8: Our Team */}
         <Team />
 
-        {/* SECTION 10: Contact */}
+        {/* SECTION 9: Contact */}
         <Contact onOpenJoin={() => setIsJoinOpen(true)} />
       </main>
 
-      {/* SECTION 11: Institutional Footer */}
+      {/* SECTION 10: Institutional Footer */}
       <Footer />
 
       {/* Interactive Join Voyagers Modal */}

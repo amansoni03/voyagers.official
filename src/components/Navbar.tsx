@@ -21,7 +21,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenJoin }) => {
       setScrolled(window.scrollY > 40);
 
       // Scrollspy detection
-      const sections = ['home', 'about', 'achievements', 'events', 'gallery', 'journey', 'team', 'contact'];
+      const sections = ['home', 'about', 'events', 'gallery', 'journey', 'team', 'contact'];
       const scrollPosition = window.scrollY + 180;
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -40,7 +40,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenJoin }) => {
   const navLinks = [
     { label: 'Home', href: '#home', id: 'home' },
     { label: 'About', href: '#about', id: 'about' },
-    { label: 'Achievements', href: '#achievements', id: 'achievements' },
     { label: 'Events', href: '#events', id: 'events' },
     { label: 'Gallery', href: '#gallery', id: 'gallery' },
     { label: 'Journey', href: '#journey', id: 'journey' },

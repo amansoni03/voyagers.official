@@ -4,35 +4,23 @@
  */
 
 import React, { useState } from 'react';
-import { Calendar, Clock, MapPin, Users, ArrowRight, X, CheckCircle2, Sparkles } from 'lucide-react';
+import { Calendar, Clock, MapPin, ArrowRight, X, Sparkles, Award } from 'lucide-react';
 import { EVENTS, ClubEvent } from '../data/events';
 import { CornerFlourish, GoldDivider } from './Ornaments';
 import { TiltCard3D } from './TiltCard3D';
 
 export const Events: React.FC = () => {
-  const [filter, setFilter] = useState<'all' | 'upcoming' | 'completed'>('upcoming');
+  const [filter, setFilter] = useState<'all' | 'ceremony' | 'technical' | 'workshop' | 'cultural'>('all');
   const [selectedEvent, setSelectedEvent] = useState<ClubEvent | null>(null);
-  const [registeredSuccess, setRegisteredSuccess] = useState<string | null>(null);
-
-  // Registration modal form state
-  const [regForm, setRegForm] = useState({
-    name: '',
-    email: '',
-    department: 'Computer Science & Engineering',
-    semester: '4th Semester',
-    studentId: '',
-  });
 
   const filteredEvents = EVENTS.filter((e) => {
     if (filter === 'all') return true;
-    return e.status === filter;
+    if (filter === 'ceremony') return e.category === 'Ceremony';
+    if (filter === 'technical') return e.category === 'Hackathon' || e.category === 'Competition';
+    if (filter === 'workshop') return e.category === 'Workshop' || e.category === 'Symposium';
+    if (filter === 'cultural') return e.category === 'Cultural';
+    return true;
   });
-
-  const handleRegisterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedEvent) return;
-    setRegisteredSuccess(`Thank you, ${regForm.name}! Your delegate registration for "${selectedEvent.title}" has been recorded. An official badge confirmation will be delivered to ${regForm.email}.`);
-  };
 
   return (
     <section id="events" className="scroll-3d-section relative py-24 bg-[#040D1A]">
@@ -49,43 +37,63 @@ export const Events: React.FC = () => {
           </h2>
 
           <p className="text-slate-300 text-sm sm:text-base font-light leading-relaxed">
-            Discover upcoming national hackathons, technical symposia, and leadership assemblies hosted
+            Explore the landmark technical hackathons, academic conclaves, and collegiate milestones organized
             by Voyagers at SMS Lucknow.
           </p>
 
           <GoldDivider />
 
           {/* Filter Segmented Control */}
-          <div className="inline-flex p-1 bg-[#0A1E3B] rounded-xl border border-[#C5A052]/30 mt-6">
-            <button
-              onClick={() => setFilter('upcoming')}
-              className={`px-5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all ${
-                filter === 'upcoming'
-                  ? 'bg-gradient-to-r from-[#C5A052] to-[#E6C77A] text-[#07182F] font-bold shadow-md'
-                  : 'text-slate-300 hover:text-[#FFFDF7]'
-              }`}
-            >
-              ✦ Upcoming Events
-            </button>
-            <button
-              onClick={() => setFilter('completed')}
-              className={`px-5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all ${
-                filter === 'completed'
-                  ? 'bg-gradient-to-r from-[#C5A052] to-[#E6C77A] text-[#07182F] font-bold shadow-md'
-                  : 'text-slate-300 hover:text-[#FFFDF7]'
-              }`}
-            >
-              Past Flagships
-            </button>
+          <div className="flex flex-wrap items-center justify-center gap-2 p-1.5 bg-[#0A1E3B] rounded-2xl border border-[#C5A052]/30 mt-6 max-w-2xl mx-auto">
             <button
               onClick={() => setFilter('all')}
-              className={`px-5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all ${
+              className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
                 filter === 'all'
                   ? 'bg-gradient-to-r from-[#C5A052] to-[#E6C77A] text-[#07182F] font-bold shadow-md'
                   : 'text-slate-300 hover:text-[#FFFDF7]'
               }`}
             >
               All Events
+            </button>
+            <button
+              onClick={() => setFilter('ceremony')}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
+                filter === 'ceremony'
+                  ? 'bg-gradient-to-r from-[#C5A052] to-[#E6C77A] text-[#07182F] font-bold shadow-md'
+                  : 'text-slate-300 hover:text-[#FFFDF7]'
+              }`}
+            >
+              Ceremony & Induction
+            </button>
+            <button
+              onClick={() => setFilter('technical')}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
+                filter === 'technical'
+                  ? 'bg-gradient-to-r from-[#C5A052] to-[#E6C77A] text-[#07182F] font-bold shadow-md'
+                  : 'text-slate-300 hover:text-[#FFFDF7]'
+              }`}
+            >
+              Technical & Hackathons
+            </button>
+            <button
+              onClick={() => setFilter('workshop')}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
+                filter === 'workshop'
+                  ? 'bg-gradient-to-r from-[#C5A052] to-[#E6C77A] text-[#07182F] font-bold shadow-md'
+                  : 'text-slate-300 hover:text-[#FFFDF7]'
+              }`}
+            >
+              Conclaves & Talks
+            </button>
+            <button
+              onClick={() => setFilter('cultural')}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
+                filter === 'cultural'
+                  ? 'bg-gradient-to-r from-[#C5A052] to-[#E6C77A] text-[#07182F] font-bold shadow-md'
+                  : 'text-slate-300 hover:text-[#FFFDF7]'
+              }`}
+            >
+              Cultural & Galas
             </button>
           </div>
         </div>
@@ -94,9 +102,7 @@ export const Events: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 scroll-stagger-flip">
           {filteredEvents.map((evt) => (
             <TiltCard3D key={evt.id} className="h-full">
-              <div
-                className="group relative rounded-2xl bg-[#0A1E3B]/80 border border-[#C5A052]/30 hover:border-[#E6C77A] flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-[0_15px_35px_rgba(197,160,82,0.2)]"
-              >
+              <div className="group relative rounded-2xl bg-[#0A1E3B]/80 border border-[#C5A052]/30 hover:border-[#E6C77A] flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-[0_15px_35px_rgba(197,160,82,0.2)]">
                 {/* Event Image */}
                 <div className="relative aspect-[16/9] overflow-hidden">
                   <img
@@ -112,19 +118,14 @@ export const Events: React.FC = () => {
 
                   {/* Status Badge */}
                   <div className="absolute top-3 right-3">
-                    <span
-                      className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                        evt.status === 'upcoming'
-                          ? 'bg-[#C5A052] text-[#07182F] shadow-lg'
-                          : 'bg-[#07182F]/80 text-slate-300 border border-white/20'
-                      }`}
-                    >
-                      {evt.status === 'upcoming' ? 'Registration Open' : 'Concluded'}
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#07182F]/90 text-[#E6C77A] border border-[#C5A052]/40 backdrop-blur-sm shadow-md">
+                      <Award size={11} className="text-[#C5A052]" />
+                      <span>Conducted</span>
                     </span>
                   </div>
 
                   <div className="absolute bottom-3 left-3">
-                    <span className="text-[11px] font-cinzel font-semibold uppercase tracking-widest text-[#E6C77A] px-2 py-0.5 rounded bg-[#07182F]/80 border border-[#C5A052]/40">
+                    <span className="text-[11px] font-cinzel font-semibold uppercase tracking-widest text-[#E6C77A] px-2.5 py-0.5 rounded bg-[#07182F]/85 border border-[#C5A052]/40">
                       {evt.category}
                     </span>
                   </div>
@@ -152,10 +153,7 @@ export const Events: React.FC = () => {
                     </div>
 
                     <button
-                      onClick={() => {
-                        setSelectedEvent(evt);
-                        setRegisteredSuccess(null);
-                      }}
+                      onClick={() => setSelectedEvent(evt)}
                       className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#E6C77A] hover:text-[#FFFDF7] transition-colors"
                     >
                       <span>View Details</span>
@@ -169,7 +167,7 @@ export const Events: React.FC = () => {
         </div>
       </div>
 
-      {/* EVENT DETAILS & REGISTRATION MODAL */}
+      {/* EVENT DETAILS MODAL */}
       {selectedEvent && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
           <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-[#07182F] text-[#F8F3E8] border border-[#C5A052] p-6 sm:p-8 shadow-2xl">
@@ -186,7 +184,7 @@ export const Events: React.FC = () => {
             {/* Modal Content */}
             <div className="mb-6">
               <span className="text-[11px] font-cinzel uppercase tracking-[0.2em] text-[#C5A052] font-semibold block mb-1">
-                {selectedEvent.category} · {selectedEvent.status === 'upcoming' ? 'Official Call for Delegates' : 'Archived Symposium'}
+                {selectedEvent.category} · Voyagers Milestone Archive
               </span>
               <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#FFFDF7] mb-2">
                 {selectedEvent.title}
@@ -218,7 +216,7 @@ export const Events: React.FC = () => {
               </p>
 
               <h4 className="text-sm font-cinzel font-bold text-[#FFFDF7] mb-2 uppercase tracking-wider">
-                Highlights & Perks
+                Highlights & Outcomes
               </h4>
               <ul className="space-y-2 mb-6 text-xs text-slate-300">
                 {selectedEvent.highlights.map((h, i) => (
@@ -228,90 +226,37 @@ export const Events: React.FC = () => {
                   </li>
                 ))}
               </ul>
+
+              {selectedEvent.speakers && selectedEvent.speakers.length > 0 && (
+                <div>
+                  <h4 className="text-sm font-cinzel font-bold text-[#FFFDF7] mb-2 uppercase tracking-wider">
+                    Key Dignitaries & Mentors
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedEvent.speakers.map((spk, idx) => (
+                      <span
+                        key={idx}
+                        className="px-3 py-1 rounded-full text-xs bg-[#0A1E3B] text-[#E6C77A] border border-[#C5A052]/30"
+                      >
+                        {spk}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Registration Form / Status */}
-            {selectedEvent.status === 'upcoming' ? (
-              <div className="pt-6 border-t border-[#C5A052]/30">
-                {registeredSuccess ? (
-                  <div className="p-4 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-200 text-xs leading-relaxed flex items-start gap-3">
-                    <CheckCircle2 size={18} className="text-emerald-400 shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-bold block mb-1">Registration Confirmed</span>
-                      {registeredSuccess}
-                    </div>
-                  </div>
-                ) : (
-                  <form onSubmit={handleRegisterSubmit} className="space-y-4">
-                    <h4 className="font-cinzel text-base font-bold text-[#E6C77A]">
-                      Register as a Delegate / Team
-                    </h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-[11px] uppercase tracking-wider text-slate-400 mb-1">
-                          Full Name *
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={regForm.name}
-                          onChange={(e) => setRegForm({ ...regForm, name: e.target.value })}
-                          placeholder="e.g. Aman Soni"
-                          className="w-full px-3 py-2 rounded-lg bg-[#0A1E3B] border border-[#C5A052]/40 text-white text-xs focus:border-[#E6C77A] focus:outline-none"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[11px] uppercase tracking-wider text-slate-400 mb-1">
-                          Email Address *
-                        </label>
-                        <input
-                          type="email"
-                          required
-                          value={regForm.email}
-                          onChange={(e) => setRegForm({ ...regForm, email: e.target.value })}
-                          placeholder="student@smslucknow.ac.in"
-                          className="w-full px-3 py-2 rounded-lg bg-[#0A1E3B] border border-[#C5A052]/40 text-white text-xs focus:border-[#E6C77A] focus:outline-none"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[11px] uppercase tracking-wider text-slate-400 mb-1">
-                          Department
-                        </label>
-                        <input
-                          type="text"
-                          value={regForm.department}
-                          onChange={(e) => setRegForm({ ...regForm, department: e.target.value })}
-                          className="w-full px-3 py-2 rounded-lg bg-[#0A1E3B] border border-[#C5A052]/40 text-white text-xs focus:border-[#E6C77A] focus:outline-none"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[11px] uppercase tracking-wider text-slate-400 mb-1">
-                          Student Roll / ID No.
-                        </label>
-                        <input
-                          type="text"
-                          value={regForm.studentId}
-                          onChange={(e) => setRegForm({ ...regForm, studentId: e.target.value })}
-                          placeholder="SMS/2024/..."
-                          className="w-full px-3 py-2 rounded-lg bg-[#0A1E3B] border border-[#C5A052]/40 text-white text-xs focus:border-[#E6C77A] focus:outline-none"
-                        />
-                      </div>
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="w-full py-3 rounded-full gold-gradient-bg text-[#07182F] font-bold text-xs uppercase tracking-widest hover:shadow-[0_0_20px_rgba(197,160,82,0.4)] transition-all"
-                    >
-                      Confirm Delegate Registration
-                    </button>
-                  </form>
-                )}
-              </div>
-            ) : (
-              <div className="pt-4 border-t border-white/10 text-center text-xs text-slate-400">
-                This event concluded on {selectedEvent.date}. Stay tuned for upcoming editions!
-              </div>
-            )}
+            <div className="pt-4 border-t border-[#C5A052]/30 flex items-center justify-between">
+              <span className="text-xs text-slate-400">
+                School of Management Sciences, Lucknow
+              </span>
+              <button
+                onClick={() => setSelectedEvent(null)}
+                className="px-5 py-2 rounded-full gold-gradient-bg text-[#07182F] font-bold text-xs uppercase tracking-wider hover:shadow-[0_0_15px_rgba(197,160,82,0.4)] transition-all"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
