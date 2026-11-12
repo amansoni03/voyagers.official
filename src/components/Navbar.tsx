@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { CLUB_CONFIG } from '../data/clubData';
+import { BackgroundAudio } from './BackgroundAudio';
 
 interface NavbarProps {
   onOpenJoin: () => void;
@@ -117,7 +118,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenJoin }) => {
         </nav>
 
         {/* Action Button & Mobile Toggle */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          {/* Top-Right Theme Background Audio Mute Button */}
+          <BackgroundAudio />
+
           <button
             onClick={onOpenJoin}
             className="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#C5A052] bg-gradient-to-r from-[#0A1E3B]/80 to-[#07182F]/80 hover:from-[#C5A052]/20 hover:to-[#E6C77A]/20 text-[#E6C77A] hover:text-[#FFFDF7] text-xs font-semibold tracking-wider uppercase transition-all duration-300 hover:shadow-[0_0_15px_rgba(197,160,82,0.3)] hover:border-[#E6C77A] active:scale-95"

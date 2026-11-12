@@ -89,13 +89,8 @@ export const Hero: React.FC<HeroProps> = ({ scrollY = 0 }) => {
             </div>
           </div>
 
-          {/* Right Column: Open spatial expanse so the 3D globe shines through without any bounding box */}
-          <div className="lg:col-span-5 hidden lg:flex flex-col items-end justify-center pointer-events-none">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#07182F]/75 border border-[#C5A052]/40 text-[#E6C77A] text-xs font-medium tracking-wider backdrop-blur-md shadow-xl pointer-events-auto hover:border-[#E6C77A] transition-colors">
-              <span className="w-2 h-2 rounded-full bg-[#C5A052] animate-pulse" />
-              <span>360° Celestial Sphere</span>
-            </div>
-          </div>
+          {/* Right Column: Open spatial expanse so the 3D globe shines through cleanly without any bounding box */}
+          <div className="lg:col-span-5 pointer-events-none" />
         </div>
       </div>
 
